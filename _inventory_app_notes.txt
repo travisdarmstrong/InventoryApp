@@ -1,0 +1,52 @@
+inventory app
+
+allow a store to keep track of its inventory of products. 
+price, quantity available, supplier, and a picture of the product. 
+allow the user to track sales and shipments and make it easy for the user to order more from the listed supplier.
+
+Main Layout
+listView
+add product button - prompt for info and picture
+ListItem:
+    - displays  product name, current quantity, and price
+    - sale button on each listItem - reduces quantity by 1        
+    - click on list item - go to detail screen
+Each list item also allows the user to track a sale of the item
+
+Detail Layout
+displays the remainder of the information stored in the database.  
+    - quantity available, 
+    - supplier, 
+    - picture
+    - buttons to + / - quantity available
+    - able to enter an amount to increase/decrease
+    - button to order from the supplier
+            - intent to phone or email to supplier
+    - button to delete the product record entirely (prompt for confirmation)
+
+track a sale or receive a shipment
+
+Add Product Layout
+validate input - reject empty information
+
+
+product table:
+
+COLUMN_ID           _id             INTEGER PRIMARY KEY AUTOINCREMENT
+COLUMN_NAME         name            TEXT NOT NULL
+COLUMN_PRICE        price           REAL NOT NULL
+COLUMN_DESCRIPTION  description     TEXT
+COLUMN_IMAGE_ID     image_id        INTEGER NOT NULL
+COLUMN_QUANTITY     quantity        INTEGER NOT NULL
+COLUMN_SUPPLIER_ID  supplier_id     INTEGER NOT NULL
+
+
+
+supplier table:
+COLUMN_ID           _id             INTEGER PRIMARY KEY AUTOINCREMENT
+COLUMN_NAME         name            TEXT NOT NULL
+COLUMN_PHONE        phone_number    TEXT
+COLUMN_EMAIL        email_address   TEXT
+COLUMN_ADDRESS      phys_address    TEXT
+
+
