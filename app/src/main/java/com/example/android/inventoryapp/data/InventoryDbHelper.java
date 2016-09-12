@@ -1,8 +1,10 @@
 package com.example.android.inventoryapp.data;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
 import com.example.android.inventoryapp.data.InventoryContract.ProductsEntry;
 import com.example.android.inventoryapp.data.InventoryContract.SuppliersEntry;
 
@@ -42,6 +44,7 @@ public class InventoryDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_PRODUCTS_TABLE);
         db.execSQL(SQL_CREATE_SUPPLIERS_TABLE);
+        setupInitialSuppliers();
     }
 
     @Override
@@ -51,5 +54,33 @@ public class InventoryDbHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    
+    private void setupInitialSuppliers(){
+        saveNewSupplier("Acme Corporation", "(800) 555-1234", "sales@acmecorporation.com", "1 Acme St. Fairfield, NJ 07004");
+        saveNewSupplier("Sears, Roebuck & Co", "", "sales@searsroebuck.com", "925 S. Homan Avenue, Chicago, IL 60624");
+        saveNewSupplier("Aperture Science", "", "sales@aperturescience.com", "");
+        saveNewSupplier("Cyberdyne Systems", "(800) 555-1001", "sales@cyberdynesystems.com", "");
+    }
+
+    /**
+     * Save a new entry in the Suppliers Table
+     * @param name - name of the supplier
+     * @param phoneNumber - phone number with area code
+     * @param emailAddress - email address to place a new order
+     * @param physicalAddress - address of the supplier
+     * @return - id of the new table entry
+     */
+    public long saveNewSupplier(String name, String phoneNumber, String emailAddress, String physicalAddress){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues cv = new ContentValues();
+        cv.put(SuppliersEntry.COLUMN_NAME, name);
+        cv.put(SuppliersEntry.COLUMN_PHONE, phoneNumber);
+        cv.put(SuppliersEntry.COLUMN_EMAIL, emailAddress);
+        cv.put(SuppliersEntry.COLUMN_ADDRESS, physicalAddress);
+
+        return db.insert(SuppliersEntry.TABLE_NAME, null, cv);
+    }
+
+
+
 }
