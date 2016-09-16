@@ -1,7 +1,7 @@
 package com.example.android.inventoryapp.data;
 
 /**
- * Created by travis on 9/11/16.
+ * Define tables and constants
  */
 public final class InventoryContract {
 

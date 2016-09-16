@@ -17,19 +17,19 @@ public class InventoryDbHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
     private static final String SQL_CREATE_PRODUCTS_TABLE = "CREATE TABLE " +
             ProductsEntry.TABLE_NAME + "(" +
-            ProductsEntry.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT " +
-            ProductsEntry.COLUMN_NAME + " TEXT NOT NULL " +
-            ProductsEntry.COLUMN_PRICE + " REAL NOT NULL " +
-            ProductsEntry.COLUMN_DESCRIPTION + " TEXT " +
-            ProductsEntry.COLUMN_IMAGE_ID + " INTEGER NOT NULL " +
-            ProductsEntry.COLUMN_QUANTITY + " INTEGER NOT NULL " +
+            ProductsEntry.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            ProductsEntry.COLUMN_NAME + " TEXT NOT NULL, " +
+            ProductsEntry.COLUMN_PRICE + " REAL NOT NULL, " +
+            ProductsEntry.COLUMN_DESCRIPTION + " TEXT, " +
+            ProductsEntry.COLUMN_IMAGE_ID + " INTEGER NOT NULL, " +
+            ProductsEntry.COLUMN_QUANTITY + " INTEGER NOT NULL, " +
             ProductsEntry.COLUMN_SUPPLIER_ID + " INTEGER NOT NULL" + ");";
     private static final String SQL_CREATE_SUPPLIERS_TABLE = "CREATE TABLE " +
             SuppliersEntry.TABLE_NAME + "(" +
-            SuppliersEntry.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT " +
-            SuppliersEntry.COLUMN_NAME + " TEXT NOT NULL " +
-            SuppliersEntry.COLUMN_PHONE + " REAL NOT NULL " +
-            SuppliersEntry.COLUMN_EMAIL + " TEXT " +
+            SuppliersEntry.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            SuppliersEntry.COLUMN_NAME + " TEXT NOT NULL, " +
+            SuppliersEntry.COLUMN_PHONE + " REAL NOT NULL, " +
+            SuppliersEntry.COLUMN_EMAIL + " TEXT, " +
             SuppliersEntry.COLUMN_ADDRESS + " TEXT " + ");";
     private static final String SQL_DELETE_PRODUCTS_TABLE =
             "DROP TABLE IF EXISTS " + ProductsEntry.TABLE_NAME + ";";
@@ -44,7 +44,6 @@ public class InventoryDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_PRODUCTS_TABLE);
         db.execSQL(SQL_CREATE_SUPPLIERS_TABLE);
-        setupInitialSuppliers();
     }
 
     @Override
@@ -55,10 +54,7 @@ public class InventoryDbHelper extends SQLiteOpenHelper {
     }
 
     private void setupInitialSuppliers(){
-        saveNewSupplier("Acme Corporation", "(800) 555-1234", "sales@acmecorporation.com", "1 Acme St. Fairfield, NJ 07004");
-        saveNewSupplier("Sears, Roebuck & Co", "", "sales@searsroebuck.com", "925 S. Homan Avenue, Chicago, IL 60624");
-        saveNewSupplier("Aperture Science", "", "sales@aperturescience.com", "");
-        saveNewSupplier("Cyberdyne Systems", "(800) 555-1001", "sales@cyberdynesystems.com", "");
+
     }
 
     /**

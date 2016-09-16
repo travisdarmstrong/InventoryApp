@@ -49,4 +49,21 @@ COLUMN_PHONE        phone_number    TEXT
 COLUMN_EMAIL        email_address   TEXT
 COLUMN_ADDRESS      phys_address    TEXT
 
+suppliers
+1 - acme corporation
+2 - sears roebuck
+3 - aperture science
+4 - cyberdyne systems
+
+products:
+birdseed - acme corporation
+anvil - acme corporation
+rocket powered roller skates - acme corporation
+Handheld Portal Device - aperture science 
+Sentry Turret - aperture science
+Weighted Storage Cube - aperture science
+Weighted Companion Cube - aperture science
+T70 - cyberdyne systems
+T-800 - cyberdyne systems
+
 
