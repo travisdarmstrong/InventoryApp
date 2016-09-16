@@ -1,14 +1,22 @@
 package com.example.android.inventoryapp.data;
 
 /**
- * Define tables and constants
+ * Define tables and constants for the Inventory database
  */
 public final class InventoryContract {
 
-    private InventoryContract(){}
+    private InventoryContract() {
+    }
 
-    public static final class ProductsEntry{
+    /**
+     * Products Table
+     */
+    public static final class ProductsEntry {
+        /**
+         * Habits Table name
+         */
         public static final String TABLE_NAME = "products";
+
         public static final String COLUMN_ID = "_id";
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_PRICE = "price";
@@ -18,7 +26,13 @@ public final class InventoryContract {
         public static final String COLUMN_SUPPLIER_ID = "supplier_id";
     }
 
-    public static final class SuppliersEntry{
+    /**
+     * Suppliers Table
+     */
+    public static final class SuppliersEntry {
+        /**
+         * Suppliers Table name
+         */
         public static final String TABLE_NAME = "suppliers";
         public static final String COLUMN_ID = "_id";
         public static final String COLUMN_NAME = "name";
