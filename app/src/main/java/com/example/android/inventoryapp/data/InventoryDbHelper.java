@@ -101,6 +101,7 @@ public class InventoryDbHelper extends SQLiteOpenHelper {
 
     /**
      * Delete a Supplier from the suppliers table given the ID
+     *
      * @param supplierId the ID of the supplier to delete
      * @return the number of rows modified
      */
@@ -116,14 +117,15 @@ public class InventoryDbHelper extends SQLiteOpenHelper {
 
     /**
      * Get all entries from the Suppliers table
+     *
      * @return Cursor with the results
      */
-    public Cursor getAllSuppliers(){
+    public Cursor getAllSuppliers() {
         // Get a readable database
         SQLiteDatabase db = this.getReadableDatabase();
         // Perform the query and return the cursor
         return db.query(SuppliersEntry.TABLE_NAME,
-                new String[] {SuppliersEntry.COLUMN_ID,
+                new String[]{SuppliersEntry.COLUMN_ID,
                         SuppliersEntry.COLUMN_NAME,
                         SuppliersEntry.COLUMN_PHONE,
                         SuppliersEntry.COLUMN_EMAIL,
@@ -131,16 +133,99 @@ public class InventoryDbHelper extends SQLiteOpenHelper {
                 null, null, null, null, null);
     }
 
-    public long saveNewProduct() {
-        return 0;
+    /**
+     * Delete all entries in the Suppliers Table
+     * But leave the database file
+     *
+     * @return
+     */
+    public int deleteAllSuppliers() {
+        // Get a writable database
+        SQLiteDatabase db = this.getWritableDatabase();
+        // Perform the deletion and return the number of rows deleted
+        return db.delete(SuppliersEntry.TABLE_NAME, null, null);
     }
 
-    public int deleteProduct() {
-        return 0;
+    /**
+     * Delete all entries from the Suppliers and Products Tables
+     * But leave the database file
+     *
+     * @return
+     */
+    public int deleteAllEntries() {
+        // Delete all entries in each table
+        return deleteAllSuppliers() + deleteAllProducts();
     }
 
-    public Cursor getAllProducts(){
-        return null;
+    /**
+     * Save a new entry in the Products Table
+     *
+     * @param name name of the item
+     * @param price price of the item
+     * @param description text description of the item
+     * @param imageId resource id of the image
+     * @param quantity number currently in stock
+     * @param supplierId ID of the supplier in the suppliers table
+     * @return the ID of the new entry
+     */
+    public long saveNewProduct(String name, double price, String description, int imageId, int quantity, int supplierId) {
+        // Get a writable database
+        SQLiteDatabase db = this.getWritableDatabase();
+        // Set up the ContentValues object to store the values for each column
+        ContentValues cv = new ContentValues();
+        cv.put(ProductsEntry.COLUMN_NAME, name);
+        cv.put(ProductsEntry.COLUMN_PRICE, price);
+        cv.put(ProductsEntry.COLUMN_DESCRIPTION, description);
+        cv.put(ProductsEntry.COLUMN_IMAGE_ID, imageId);
+        cv.put(ProductsEntry.COLUMN_QUANTITY, quantity);
+        cv.put(ProductsEntry.COLUMN_SUPPLIER_ID, supplierId);
+        // Insert the row in the database table and return the row ID
+        return db.insert(ProductsEntry.TABLE_NAME, null, cv);
+    }
+
+    /**
+     * Delete a product from the Products Table given the ID
+     * @param productId the ID of the entry to delete
+     * @return the number of entries deleted
+     */
+    public int deleteProduct(long productId) {
+        // Get a writable database
+        SQLiteDatabase db = this.getWritableDatabase();
+        // Set up the query to find the target row
+        String selection = ProductsEntry.COLUMN_ID + "=?";
+        String[] selectionArgs = {String.valueOf(productId)};
+        // Delete the row and return the number of rows modified
+        return db.delete(ProductsEntry.TABLE_NAME, selection, selectionArgs);
+    }
+
+    /**
+     * Get all entries from the Products Table
+     * @return Cursor with the results
+     */
+    public Cursor getAllProducts() {
+        // Get a readable database
+        SQLiteDatabase db = this.getReadableDatabase();
+        // Perform the query and return the cursor
+        return db.query(ProductsEntry.TABLE_NAME,
+                new String[]{ProductsEntry.COLUMN_ID,
+                        ProductsEntry.COLUMN_NAME,
+                        ProductsEntry.COLUMN_PRICE,
+                        ProductsEntry.COLUMN_DESCRIPTION,
+                        ProductsEntry.COLUMN_IMAGE_ID,
+                        ProductsEntry.COLUMN_QUANTITY,
+                        ProductsEntry.COLUMN_SUPPLIER_ID},
+                null, null, null, null, null);
+    }
+
+    /**
+     * Delete all entries in the Products table
+     * @return the number of entries deleted
+     */
+    public int deleteAllProducts() {
+        // Get a writable database
+        SQLiteDatabase db = this.getWritableDatabase();
+        // Perform the deletion and return the number of rows deleted
+        return db.delete(ProductsEntry.TABLE_NAME, null, null);
     }
 
 
