@@ -1,3 +1,35 @@
 <resources>
     <string name="app_name">InventoryApp</string>
+
+    <!-- Dummy Data -->
+    <string name="supplier1_name">Acme Corporation</string>
+    <string name="supplier1_phone">(800) 555–1234</string>
+    <string name="supplier1_email">sales@acmecorporation.com</string>
+    <string name="supplier1_address">1 Acme St. Fairfield, NJ 07004</string>
+    <string name="supplier2_name">Aperture Science</string>
+    <string name="supplier2_phone">(513) 273–7724</string>
+    <string name="supplier2_email">sales@aperturescience.com</string>
+    <string name="supplier2_address">Michigan, USA</string>
+    <string name="supplier3_name">Cyberdyne Systems</string>
+    <string name="supplier3_phone">(800) 555–1001</string>
+    <string name="supplier3_email">sales@cyberdynesystems.com</string>
+    <string name="supplier3_address">(address classified)</string>
+    <string name="anvil_name">Anvil</string>
+    <string name="anvil_desc">156 lbs</string>
+    <string name="birdseed_name">Birdseed</string>
+    <string name="birdseed_desc">Especially good at attracting roadrunners.</string>
+    <string name="skates_name">Rocket Powered Roller Skates</string>
+    <string name="skates_desc">Capable of reaching speeds up to 12MPH. Please wear a helmet.</string>
+    <string name="portal_name">Handheld Portal Device</string>
+    <string name="portal_desc">The ASHPD is a hand-held device which has the ability to manufacture two linked portals. These intra-dimensional gates have proven to be completely safe. The Device, however, has not.</string>
+    <string name="turret_name">Sentry Turret</string>
+    <string name="turret_desc">The Aperture Sentry Turret has a single red eye, a sleek appearance, and predominately white color scheme</string>
+    <string name="scube_name">Weighted Storage Cube</string>
+    <string name="scube_desc">The Weighted Storage Cube is a device used for solving cube-and-button based puzzles in the various Test Chambers found throughout the Enrichment Center.</string>
+    <string name="ccube_name">Weighted Companion Cube</string>
+    <string name="ccube_desc">The Weighted Companion Cube is identical to the regular Weighted Storage Cube, except that it has a heart. The Weighted Companion Cube will never threaten to stab you and, in fact, cannot speak</string>
+    <string name="t70_name">T70 Automated Fighting Infantry Unit</string>
+    <string name="t70_desc">The Cyberdyne Series 70 Automated Fighting Infantry Unit, was the first with a humanoid form. It is a tall and basic model designed as a foot soldier.</string>
+    <string name="t800_name">Series 800 Terminator</string>
+    <string name="t800_desc">The T-800 Terminator is Skynet\'s first cybernetic organism, with living tissue over a hyperalloy endoskeleton.</string>
 </resources>

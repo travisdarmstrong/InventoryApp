@@ -150,7 +150,7 @@ public class InventoryDbHelper extends SQLiteOpenHelper {
      * Delete all entries from the Suppliers and Products Tables
      * But leave the database file
      *
-     * @return
+     * @return the number of entries deleted
      */
     public int deleteAllEntries() {
         // Delete all entries in each table
@@ -168,7 +168,7 @@ public class InventoryDbHelper extends SQLiteOpenHelper {
      * @param supplierId ID of the supplier in the suppliers table
      * @return the ID of the new entry
      */
-    public long saveNewProduct(String name, double price, String description, int imageId, int quantity, int supplierId) {
+    public long saveNewProduct(String name, double price, String description, int imageId, int quantity, long supplierId) {
         // Get a writable database
         SQLiteDatabase db = this.getWritableDatabase();
         // Set up the ContentValues object to store the values for each column
