@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">InventoryApp</string>
+    <string name="delete">Delete</string>
+    <string name="plusone">+1</string>
+    <string name="minusone">-1</string>
+    <string name="adjust_inventory">Adjust Inventory</string>
 
     <!-- Dummy Data -->
     <string name="supplier1_name">Acme Corporation</string>
@@ -32,4 +36,7 @@
     <string name="t70_desc">The Cyberdyne Series 70 Automated Fighting Infantry Unit, was the first with a humanoid form. It is a tall and basic model designed as a foot soldier.</string>
     <string name="t800_name">Series 800 Terminator</string>
     <string name="t800_desc">The T-800 Terminator is Skynet\'s first cybernetic organism, with living tissue over a hyperalloy endoskeleton.</string>
+
+
+
 </resources>
