@@ -7,7 +7,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:orientation="vertical">
 
         <ImageView
@@ -39,73 +38,76 @@
             tools:text="Product description goes here" />
 
         <ImageView
-            android:background="#DDDDDD"
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="1dp"
+            android:background="#DDDDDD" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
             android:orientation="horizontal">
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_height="match_parent">
+                android:orientation="vertical">
+
                 <TextView
-                    android:text="Supplier:"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:fontFamily="sans-serif-light"
-                    android:textSize="14sp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:text="Supplier:"
+                    android:textSize="14sp" />
+
                 <TextView
-                    tools:text="Cyberdyne Systems"
-                    android:fontFamily="sans-serif-heavy"
-                    android:textSize="18sp"
-                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/detail_supplier_name"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="sans-serif-heavy"
+                    android:textSize="20sp"
+                    tools:text="Cyberdyne Systems" />
             </LinearLayout>
+
             <Button
-                android:fontFamily="sans-serif"
-                android:textSize="12sp"
-                android:text="Place\nOrder"
-                android:layout_gravity="center_vertical"
-                android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                />
+                android:layout_gravity="center_vertical"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:text="Place\nOrder"
+                android:textSize="12sp" />
 
             <LinearLayout
-                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:orientation="vertical">
+
                 <TextView
-                    android:text="Quantity:"
-                    android:textSize="14sp"
-                    android:layout_gravity="right"
-                    android:gravity="right|center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
-                    android:layout_weight="1"/>
+                    android:layout_gravity="right"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
+                    android:text="Quantity:"
+                    android:textSize="12sp" />
+
                 <TextView
                     android:id="@+id/detail_quantity"
-                    android:textSize="36sp"
-                    tools:text="8"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:layout_gravity="center_vertical|center_horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textSize="36sp"
+                    tools:text="8" />
             </LinearLayout>
-
-
         </LinearLayout>
 
         <LinearLayout
@@ -113,23 +115,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
             android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/detail_addone"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:fontFamily="sans-serif-medium"
-                android:text="@string/plusone"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical|center_horizontal"
-                android:text="@string/adjust_inventory"
-                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/detail_minusone"
@@ -137,6 +125,21 @@
                 android:layout_height="match_parent"
                 android:fontFamily="sans-serif-medium"
                 android:text="@string/minusone"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="@string/adjust_inventory"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/detail_addone"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/plusone"
                 android:textSize="18sp" />
         </LinearLayout>
 
@@ -146,8 +149,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="sans-serif-light"
-            android:textSize="12sp"
-            tools:text="Add Custom Amount" />
+            android:text="Add Custom Amount"
+            android:textSize="12sp" />
     </LinearLayout>
 
 </ScrollView>

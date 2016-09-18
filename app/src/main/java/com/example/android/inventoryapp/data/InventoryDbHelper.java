@@ -116,11 +116,12 @@ public class InventoryDbHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Get all entries from the Suppliers table
-     *
+     * Internal method to query the suppliers table
+     * @param selection selection query
+     * @param selectionArgs arguments for selection query
      * @return Cursor with the results
      */
-    public Cursor getAllSuppliers() {
+    private Cursor getSuppliers(String selection, String[] selectionArgs){
         // Get a readable database
         SQLiteDatabase db = this.getReadableDatabase();
         // Perform the query and return the cursor
@@ -130,7 +131,42 @@ public class InventoryDbHelper extends SQLiteOpenHelper {
                         SuppliersEntry.COLUMN_PHONE,
                         SuppliersEntry.COLUMN_EMAIL,
                         SuppliersEntry.COLUMN_ADDRESS},
-                null, null, null, null, null);
+                selection, selectionArgs, null, null, null);
+    }
+    /**
+     * Get all entries from the Suppliers table
+     *
+     * @return Cursor with the results
+     */
+    public Cursor getAllSuppliers() {
+        // Call the internal method with no selection arguments
+        return getSuppliers(null ,null);
+    }
+
+    /**
+     * Get entry from the supplier table by passing the supplier ID
+     * @param supplierId ID of the supplier entry
+     * @return Cursor with the results
+     */
+    public Cursor getSupplierById(long supplierId){
+        // Set up the query to find the target row
+        String selection = SuppliersEntry.COLUMN_ID + "=?";
+        String[] selectionArgs = {String.valueOf(supplierId)};
+        // Call the internal method with selection arguments
+        return getSuppliers(selection, selectionArgs);
+    }
+
+    /**
+     * Get entry from the supplier table by passing the supplier name
+     * @param supplierName name of the supplier
+     * @return Cursor with the results
+     */
+    public Cursor getSupplierByName(String supplierName){
+        // Set up the query to find the target row
+        String selection = SuppliersEntry.COLUMN_NAME + "=?";
+        String[] selectionArgs = {String.valueOf(supplierName)};
+        // Call the internal method with selection arguments
+        return getSuppliers(selection, selectionArgs);
     }
 
     /**
@@ -199,10 +235,12 @@ public class InventoryDbHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Get all entries from the Products Table
-     * @return Cursor with the results
+     * Internal method to run the query and return cursor
+     * @param selection selection query
+     * @param selectionArgs args for selection query
+     * @return Cursor with results
      */
-    public Cursor getAllProducts() {
+    private Cursor getProducts(String selection, String[] selectionArgs){
         // Get a readable database
         SQLiteDatabase db = this.getReadableDatabase();
         // Perform the query and return the cursor
@@ -214,7 +252,42 @@ public class InventoryDbHelper extends SQLiteOpenHelper {
                         ProductsEntry.COLUMN_IMAGE_ID,
                         ProductsEntry.COLUMN_QUANTITY,
                         ProductsEntry.COLUMN_SUPPLIER_ID},
-                null, null, null, null, null);
+                selection, selectionArgs, null, null, null);
+    }
+
+    /**
+     * Get all entries from the Products Table
+     * @return Cursor with the results
+     */
+    public Cursor getAllProducts() {
+        // call the internal method with no selection arguments
+        return getProducts(null, null);
+    }
+
+    /**
+     * Get entry from the product table by passing the product ID
+      * @param productId ID of the product entry
+     * @return Cursor with the results
+     */
+    public Cursor getProductById(long productId){
+        // Set up the query to find the target row
+        String selection = ProductsEntry.COLUMN_ID + "=?";
+        String[] selectionArgs = {String.valueOf(productId)};
+        // Call the internal method with selection arguments
+        return getProducts(selection, selectionArgs);
+    }
+
+    /**
+     * Get entry from the product table by passing the product Name
+     * @param productName name of the product
+     * @return Cursor with the results
+     */
+    public Cursor getProductByName(String productName){
+        // Set up the query to find the target row
+        String selection = ProductsEntry.COLUMN_NAME + "=?";
+        String[] selectionArgs = {String.valueOf(productName)};
+        // Call the internal method with selection arguments
+        return getProducts(selection, selectionArgs);
     }
 
     /**
