@@ -5,6 +5,23 @@
     <string name="minusone">-1</string>
     <string name="adjust_inventory">Adjust Inventory</string>
 
+    <!-- Main Activity display -->
+    <string name="main_menu_insert_dummy_data">Insert Dummy Data</string>
+    <string name="main_menu_delete_all">Delete All Products</string>
+    <string name="empty_text">No products in the database. Add some to get started</string>
+
+    <!-- Delete Confirmation -->
+    <string name="delete_all_conf_message">Delete all products in the database?</string>
+    <string name="delete_all_conf_positive">Delete All</string>
+    <string name="delete_all_conf_negative">Cancel</string>
+    <string name="delete_all_success">All products deleted</string>
+    <string name="delete_all_fail">Error deleting products</string>
+    <string name="delete_conf_message">Delete product?</string>
+    <string name="delete_positive">Delete</string>
+    <string name="delete_negative">Cancel</string>
+    <string name="delete_success">Product deleted</string>
+    <string name="delete_fail">Error deleting product</string>
+
     <!-- Dummy Data -->
     <string name="supplier1_name">Acme Corporation</string>
     <string name="supplier1_phone">(800) 555–1234</string>

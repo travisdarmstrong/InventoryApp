@@ -27,7 +27,6 @@ public class InventoryProduct {
             this._productDescription = c.getString(c.getColumnIndex(ProductsEntry.COLUMN_DESCRIPTION));
             this._productQuantity = c.getInt(c.getColumnIndex(ProductsEntry.COLUMN_QUANTITY));
             this._productPrice = c.getDouble(c.getColumnIndex(ProductsEntry.COLUMN_PRICE));;
-            this._supplierId = c.getLong(c.getColumnIndex(ProductsEntry.COLUMN_SUPPLIER_ID));
         }
     }
 

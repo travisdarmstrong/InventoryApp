@@ -1,15 +1,15 @@
 package com.example.android.inventoryapp;
 
-import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.inventoryapp.data.InventoryDbHelper;
-import com.example.android.inventoryapp.data.InventoryProduct;
-import com.example.android.inventoryapp.data.InventorySupplier;
 
 /**
  * Created by travis on 9/11/16.
@@ -18,18 +18,16 @@ public class DetailActivity extends AppCompatActivity{
 
     private InventoryDbHelper dbHelper;
     private long productId;
-    private InventoryProduct product;
-    private InventorySupplier supplier;
     public static final String EXTRA_PRODUCTID = "productid";
     public static final String EXTRA_DBHELPER = "dbhelper";
+    private Uri uri;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        productId = getIntent().getLongExtra(EXTRA_PRODUCTID, -1);
-        dbHelper = new InventoryDbHelper(this);
         setContentView(R.layout.detail);
-        getProductInfo(productId);
+        uri = getIntent().getData();
+
         displayData();
     }
 
@@ -40,15 +38,12 @@ public class DetailActivity extends AppCompatActivity{
         return true;
     }
 
-    private void getProductInfo(long productId){
-        Cursor c = dbHelper.getProductById(productId);
-        product = new InventoryProduct(c);
-        getSupplierInfo(product.getSupplierId());
-    }
-
-    private void getSupplierInfo(long supplierId){
-        Cursor c = dbHelper.getSupplierById(supplierId);
-        supplier = new InventorySupplier(c);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==R.id.detail_menu_delete){
+            Toast.makeText(this, "delete", Toast.LENGTH_SHORT).show();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void displayData(){
@@ -57,9 +52,9 @@ public class DetailActivity extends AppCompatActivity{
         TextView productQtyText = (TextView) findViewById(R.id.detail_quantity);
         TextView supplierNameText = (TextView) findViewById(R.id.detail_supplier_name);
 
-        productNameText.setText(product.getName());
-        productDescText.setText(product.getDescription());
-        productQtyText.setText(String.valueOf(product.getQuantity()));
-        supplierNameText.setText(supplier.getName());
+        productNameText.setText("name");
+        productDescText.setText("description");
+        productQtyText.setText("2");
+        supplierNameText.setText("supplier");
     }
 }

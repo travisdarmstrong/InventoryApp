@@ -17,7 +17,11 @@
         </activity>
         <activity android:name=".DetailActivity" android:parentActivityName=".MainActivity" android:label="Product Detail">
         </activity>
-
+        <provider
+            android:authorities="com.example.android.inventoryapp"
+            android:name=".data.InventoryContentProvider"
+            android:exported="false"
+            />
     </application>
 
 </manifest>

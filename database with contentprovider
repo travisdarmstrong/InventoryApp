@@ -1,0 +1,34 @@
+
+Contract > Entry
+    Define database schema:
+        TABLE_NAME and COLUMNS
+        Content_Authority and URIs, MIME types
+Dbhelper
+    sql to create table
+    db name, version
+    but nothing for getting or saving
+Provider
+    UriMatcher
+    query, insert, delete, update implementations using the URI
+    setnotificationuri to update when data changes
+    insert - validate entries, insert, notify change
+    if match is the whole table, act based on selection & selectionArgs
+    if match is one item, set selection & selectionArgs to be that ID
+    add <provider> to Manifest
+
+usage:
+    to add an item, call getContentResolver().insert(URI, ContentValues)
+
+display:
+ListView
+    also include another view to use as the empty view
+List item textview
+    display elements for each value
+CursorAdapter
+    newview and bindview - set display values
+
+implement LoaderCallbacks and methods oncreateloader, loadfinished, onloaderreset
+initialize the loader (getsupportloadermanager.initloader) with an int reference id
+oncreateloader - create a new cursorloader with uri to table
+
+

@@ -1,58 +1,226 @@
 package com.example.android.inventoryapp;
 
+import android.content.ContentUris;
+import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
 
-import com.example.android.inventoryapp.data.InventoryDbHelper;
+import com.example.android.inventoryapp.data.InventoryContract.ProductsEntry;
+import com.example.android.inventoryapp.data.InventoryCursorAdapter;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private InventoryDbHelper dbHelper;
     private static final String TAG = "Main Activity";
+    private InventoryCursorAdapter adapter;
+    private static final int LOADER_REFERENCE = 1234;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        dbHelper = new InventoryDbHelper(this);
-        dbHelper.deleteAllEntries();
-        long productId = CreateDummyData();
+        Cursor c;
+        adapter = new InventoryCursorAdapter(this, null, 0);
+        ListView productListView = (ListView) findViewById(R.id.list);
+        View emptyView = findViewById(R.id.empty_view);
+        productListView.setEmptyView(emptyView);
+        productListView.setAdapter(adapter);
 
-        Cursor sCursor = dbHelper.getAllSuppliers();
-        Cursor pCursor = dbHelper.getAllProducts();
+        productListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MainActivity.this, "Item clicked", Toast.LENGTH_SHORT).show();
+                Intent detailIntent = new Intent(MainActivity.this, DetailActivity.class);
+                // get the Uri for the selected product
+                Uri productUri = ContentUris.withAppendedId(ProductsEntry.CONTENT_URI, id);
+                detailIntent.setData(productUri);
+                startActivity(detailIntent);
+            }
+        });
 
-        Log.d(TAG, "Suppliers: " + sCursor.getCount());
-        Log.d(TAG, "Products: " + pCursor.getCount());
-
-        Intent i = new Intent(this, DetailActivity.class);
-        i.putExtra(DetailActivity.EXTRA_PRODUCTID, productId);
-        startActivity(i);
+        getSupportLoaderManager().initLoader(LOADER_REFERENCE, null, this);
     }
 
-    private long CreateDummyData(){
-        long acmeId = dbHelper.saveNewSupplier(getString(R.string.supplier1_name), getString(R.string.supplier1_phone), getString(R.string.supplier1_email), getString(R.string.supplier1_address));
-        long apertureScienceId = dbHelper.saveNewSupplier(getString(R.string.supplier2_name), getString(R.string.supplier2_phone), getString(R.string.supplier2_email), getString(R.string.supplier2_address));
-        long cyberdyneId = dbHelper.saveNewSupplier(getString(R.string.supplier3_name), getString(R.string.supplier3_phone), getString(R.string.supplier3_email), getString(R.string.supplier2_address));
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case (R.id.main_menu_insert_dummy_data):
+                CreateDummyData();
+                return true;
+            case (R.id.main_menu_delete_all):
+                showDeleteConfirmationDialog();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    /**
+     * Confirm the user wants to delete all products in the database
+     */
+    private void showDeleteConfirmationDialog() {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        alertBuilder.setMessage(getString(R.string.delete_all_conf_message));
+        alertBuilder.setPositiveButton(getString(R.string.delete_all_conf_positive), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deleteAllProducts();
+            }
+        });
+        alertBuilder.setNegativeButton(getString(R.string.delete_all_conf_negative), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alertDialog = alertBuilder.create();
+        alertDialog.show();
+    }
+
+    /**
+     * Delete all products in the database and display a message with the result
+     */
+    private void deleteAllProducts() {
+        int numRowsDeleted = getContentResolver().delete(ProductsEntry.CONTENT_URI, null, null);
+        if (numRowsDeleted > 0) {
+            Toast.makeText(this, getString(R.string.delete_all_success), Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, getString(R.string.delete_all_fail), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Create some data in the table
+     */
+    private void CreateDummyData() {
+
+        ContentValues values = new ContentValues();
+
+        // create some products from Aperture Science
+        values.put(ProductsEntry.COLUMN_NAME, getString(R.string.portal_name));
+        values.put(ProductsEntry.COLUMN_PRICE, 2499.99);
+        values.put(ProductsEntry.COLUMN_DESCRIPTION, getString(R.string.portal_desc));
+        values.put(ProductsEntry.COLUMN_IMAGE_ID, 0);
+        values.put(ProductsEntry.COLUMN_QUANTITY, 1);
+        values.put(ProductsEntry.COLUMN_SUPPLIER_NAME, getString(R.string.supplier2_name));
+        values.put(ProductsEntry.COLUMN_SUPPLIER_EMAIL, getString(R.string.supplier2_email));
+        Uri newProductUri = getContentResolver().insert(ProductsEntry.CONTENT_URI, values);
+
+        values.put(ProductsEntry.COLUMN_NAME, getString(R.string.scube_name));
+        values.put(ProductsEntry.COLUMN_PRICE, 115);
+        values.put(ProductsEntry.COLUMN_DESCRIPTION, getString(R.string.scube_desc));
+        values.put(ProductsEntry.COLUMN_IMAGE_ID, 0);
+        values.put(ProductsEntry.COLUMN_QUANTITY, 80);
+        values.put(ProductsEntry.COLUMN_SUPPLIER_NAME, getString(R.string.supplier2_name));
+        values.put(ProductsEntry.COLUMN_SUPPLIER_EMAIL, getString(R.string.supplier2_email));
+        newProductUri = getContentResolver().insert(ProductsEntry.CONTENT_URI, values);
+
+        values.put(ProductsEntry.COLUMN_NAME, getString(R.string.ccube_name));
+        values.put(ProductsEntry.COLUMN_PRICE, 116);
+        values.put(ProductsEntry.COLUMN_DESCRIPTION, getString(R.string.ccube_desc));
+        values.put(ProductsEntry.COLUMN_IMAGE_ID, 0);
+        values.put(ProductsEntry.COLUMN_QUANTITY, 1);
+        values.put(ProductsEntry.COLUMN_SUPPLIER_NAME, getString(R.string.supplier2_name));
+        values.put(ProductsEntry.COLUMN_SUPPLIER_EMAIL, getString(R.string.supplier2_email));
+        newProductUri = getContentResolver().insert(ProductsEntry.CONTENT_URI, values);
+
+        values.put(ProductsEntry.COLUMN_NAME, getString(R.string.turret_name));
+        values.put(ProductsEntry.COLUMN_PRICE, 11999.99);
+        values.put(ProductsEntry.COLUMN_DESCRIPTION, getString(R.string.turret_desc));
+        values.put(ProductsEntry.COLUMN_IMAGE_ID, 0);
+        values.put(ProductsEntry.COLUMN_QUANTITY, 12);
+        values.put(ProductsEntry.COLUMN_SUPPLIER_NAME, getString(R.string.supplier2_name));
+        values.put(ProductsEntry.COLUMN_SUPPLIER_EMAIL, getString(R.string.supplier2_email));
+        newProductUri = getContentResolver().insert(ProductsEntry.CONTENT_URI, values);
+
+        // create some products from Cyberdyne Systems
+        values.put(ProductsEntry.COLUMN_NAME, getString(R.string.t70_name));
+        values.put(ProductsEntry.COLUMN_PRICE, 60500);
+        values.put(ProductsEntry.COLUMN_DESCRIPTION, getString(R.string.t70_desc));
+        values.put(ProductsEntry.COLUMN_IMAGE_ID, 0);
+        values.put(ProductsEntry.COLUMN_QUANTITY, 4);
+        values.put(ProductsEntry.COLUMN_SUPPLIER_NAME, getString(R.string.supplier3_name));
+        values.put(ProductsEntry.COLUMN_SUPPLIER_EMAIL, getString(R.string.supplier3_email));
+        newProductUri = getContentResolver().insert(ProductsEntry.CONTENT_URI, values);
+
+        values.put(ProductsEntry.COLUMN_NAME, getString(R.string.t800_name));
+        values.put(ProductsEntry.COLUMN_PRICE, 450000);
+        values.put(ProductsEntry.COLUMN_DESCRIPTION, getString(R.string.t800_desc));
+        values.put(ProductsEntry.COLUMN_IMAGE_ID, 0);
+        values.put(ProductsEntry.COLUMN_QUANTITY, 1);
+        values.put(ProductsEntry.COLUMN_SUPPLIER_NAME, getString(R.string.supplier3_name));
+        values.put(ProductsEntry.COLUMN_SUPPLIER_EMAIL, getString(R.string.supplier3_email));
+        newProductUri = getContentResolver().insert(ProductsEntry.CONTENT_URI, values);
 
         // Create some products from Acme
-        long anvilId = dbHelper.saveNewProduct(getString(R.string.anvil_name), 17, getString(R.string.anvil_name), 0, 4, acmeId);
-        long birdseedId = dbHelper.saveNewProduct(getString(R.string.birdseed_name), 4.50, getString(R.string.birdseed_name), 0, 8, acmeId);
-        long skatesId = dbHelper.saveNewProduct(getString(R.string.skates_name), 1200, getString(R.string.skates_desc), 0, 0, acmeId);
+        values.put(ProductsEntry.COLUMN_NAME, getString(R.string.anvil_name));
+        values.put(ProductsEntry.COLUMN_PRICE, 17);
+        values.put(ProductsEntry.COLUMN_DESCRIPTION, getString(R.string.anvil_desc));
+        values.put(ProductsEntry.COLUMN_IMAGE_ID, 0);
+        values.put(ProductsEntry.COLUMN_QUANTITY, 4);
+        values.put(ProductsEntry.COLUMN_SUPPLIER_NAME, getString(R.string.supplier1_name));
+        values.put(ProductsEntry.COLUMN_SUPPLIER_EMAIL, getString(R.string.supplier1_email));
+        newProductUri = getContentResolver().insert(ProductsEntry.CONTENT_URI, values);
 
-        // Create some products from Aperture Science
-        long portalId = dbHelper.saveNewProduct(getString(R.string.portal_name), 2499.99, getString(R.string.portal_desc), 0, 1, apertureScienceId);
-        long scubeId = dbHelper.saveNewProduct(getString(R.string.scube_name), 115, getString(R.string.scube_desc), 0, 80, apertureScienceId);
-        long ccubeId = dbHelper.saveNewProduct(getString(R.string.ccube_name), 116, getString(R.string.ccube_desc), 0, 1, apertureScienceId);
-        long turretId = dbHelper.saveNewProduct(getString(R.string.turret_name), 11999.99, getString(R.string.turret_desc), 0, 12, apertureScienceId);
+        values.put(ProductsEntry.COLUMN_NAME, getString(R.string.skates_name));
+        values.put(ProductsEntry.COLUMN_PRICE, 1200);
+        values.put(ProductsEntry.COLUMN_DESCRIPTION, getString(R.string.skates_desc));
+        values.put(ProductsEntry.COLUMN_IMAGE_ID, 0);
+        values.put(ProductsEntry.COLUMN_QUANTITY, 0);
+        values.put(ProductsEntry.COLUMN_SUPPLIER_NAME, getString(R.string.supplier1_name));
+        values.put(ProductsEntry.COLUMN_SUPPLIER_EMAIL, getString(R.string.supplier1_email));
+        newProductUri = getContentResolver().insert(ProductsEntry.CONTENT_URI, values);
 
-        // Create some products from Cyberdyne Systems
-        long t70Id = dbHelper.saveNewProduct(getString(R.string.t70_name), 60500, getString(R.string.t70_desc), 0, 4, cyberdyneId);
-        long t800Id = dbHelper.saveNewProduct(getString(R.string.t800_name), 450000, getString(R.string.t800_desc), 0, 1, cyberdyneId);
+    }
 
-        return portalId;
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        if (id==LOADER_REFERENCE){
+
+            Uri uri = ProductsEntry.CONTENT_URI;
+            String[] columns = new String[]{
+                    ProductsEntry.COLUMN_ID,
+                    ProductsEntry.COLUMN_NAME,
+                    ProductsEntry.COLUMN_PRICE,
+                    ProductsEntry.COLUMN_DESCRIPTION,
+                    ProductsEntry.COLUMN_IMAGE_ID,
+                    ProductsEntry.COLUMN_QUANTITY };
+            return new CursorLoader(this,
+                    uri, columns,
+                    null, null, null);
+        }
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        adapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        if (adapter != null) {
+            adapter.swapCursor(null);
+        }
     }
 }

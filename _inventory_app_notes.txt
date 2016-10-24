@@ -32,28 +32,20 @@ validate input - reject empty information
 
 product table:
 
-COLUMN_ID           _id             INTEGER PRIMARY KEY AUTOINCREMENT
-COLUMN_NAME         name            TEXT NOT NULL
-COLUMN_PRICE        price           REAL NOT NULL
-COLUMN_DESCRIPTION  description     TEXT
-COLUMN_IMAGE_ID     image_id        INTEGER NOT NULL
-COLUMN_QUANTITY     quantity        INTEGER NOT NULL
-COLUMN_SUPPLIER_ID  supplier_id     INTEGER NOT NULL
-
-
-
-supplier table:
-COLUMN_ID           _id             INTEGER PRIMARY KEY AUTOINCREMENT
-COLUMN_NAME         name            TEXT NOT NULL
-COLUMN_PHONE        phone_number    TEXT
-COLUMN_EMAIL        email_address   TEXT
-COLUMN_ADDRESS      phys_address    TEXT
+COLUMN_ID               _id             INTEGER PRIMARY KEY AUTOINCREMENT   
+COLUMN_NAME             name            TEXT NOT NULL
+COLUMN_PRICE            price           REAL NOT NULL
+COLUMN_DESCRIPTION      description     TEXT
+COLUMN_IMAGE_ID         image_id        INTEGER
+COLUMN_QUANTITY         quantity        INTEGER NOT NULL
+COLUMN_SUPPLIER_NAME    name            TEXT NOT NULL
+COLUMN_SUPPLIER_EMAIL   email_address   TEXT
 
 suppliers
-1 - acme corporation
-2 - sears roebuck
-3 - aperture science
-4 - cyberdyne systems
+acme corporation
+sears roebuck
+aperture science
+cyberdyne systems
 
 products:
 birdseed - acme corporation
