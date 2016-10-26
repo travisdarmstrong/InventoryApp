@@ -1,9 +1,7 @@
 package com.example.android.inventoryapp;
 
-import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -39,18 +36,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         View emptyView = findViewById(R.id.empty_view);
         productListView.setEmptyView(emptyView);
         productListView.setAdapter(adapter);
-
-        productListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, "Item clicked", Toast.LENGTH_SHORT).show();
-                Intent detailIntent = new Intent(MainActivity.this, DetailActivity.class);
-                // get the Uri for the selected product
-                Uri productUri = ContentUris.withAppendedId(ProductsEntry.CONTENT_URI, id);
-                detailIntent.setData(productUri);
-                startActivity(detailIntent);
-            }
-        });
 
         getSupportLoaderManager().initLoader(LOADER_REFERENCE, null, this);
     }

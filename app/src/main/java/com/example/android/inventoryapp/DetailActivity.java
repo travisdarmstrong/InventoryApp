@@ -9,17 +9,11 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.android.inventoryapp.data.InventoryDbHelper;
-
 /**
- * Created by travis on 9/11/16.
+ * Show detailed product information
  */
 public class DetailActivity extends AppCompatActivity{
 
-    private InventoryDbHelper dbHelper;
-    private long productId;
-    public static final String EXTRA_PRODUCTID = "productid";
-    public static final String EXTRA_DBHELPER = "dbhelper";
     private Uri uri;
 
     @Override
