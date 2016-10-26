@@ -1,6 +1,7 @@
 package com.example.android.inventoryapp.data;
 
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.inventoryapp.DetailActivity;
 import com.example.android.inventoryapp.R;
@@ -25,6 +27,7 @@ import static com.example.android.inventoryapp.R.id.qty_available;
  */
 
 public class InventoryCursorAdapter extends CursorAdapter {
+    private static final String TAG = "CursorAdapter";
     private Context mContext;
 
     public InventoryCursorAdapter(Context context, Cursor c, int flags) {
@@ -41,7 +44,7 @@ public class InventoryCursorAdapter extends CursorAdapter {
      * Set the views of the list item to values from the cursor
      */
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
+    public void bindView(View view, Context context, final Cursor cursor) {
         // Get the textviews
         TextView txtName = (TextView) view.findViewById(R.id.product_name_text);
         TextView txtDescription = (TextView) view.findViewById(R.id.product_description_text);
@@ -71,7 +74,9 @@ public class InventoryCursorAdapter extends CursorAdapter {
         btnSell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("CursorAdapter", "Button " + String.valueOf(id) + " clicked");
+                long id = (long)v.getTag();
+
+                AdjustQuantity(id, -1);
             }
         });
 
@@ -87,15 +92,46 @@ public class InventoryCursorAdapter extends CursorAdapter {
     /**
      * When the user clicks on the text of the item, show the detailed view
      */
-    private View.OnClickListener detailClickListener = new View.OnClickListener(){
+    private View.OnClickListener detailClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            long id = (long)v.getTag();
+            long id = (long) v.getTag();
             Intent detailIntent = new Intent(mContext, DetailActivity.class);
             Uri detailUri = ContentUris.withAppendedId(ProductsEntry.CONTENT_URI, id);
             detailIntent.setData(detailUri);
             mContext.startActivity(detailIntent);
         }
     };
+
+    /**
+     * Update the quantity
+     *
+     * @param id  ID of the product in the table
+     * @param byVal how many to add or subtract
+     */
+    private void AdjustQuantity(long id, int byVal) {
+        Uri updateUri = ContentUris.withAppendedId(ProductsEntry.CONTENT_URI, id);
+
+        // first, get the current quantity
+        Cursor c = mContext.getContentResolver().query(updateUri,
+                new String[]{ProductsEntry.COLUMN_QUANTITY}, null, null, null);
+        int qty=-1;
+        if (c.moveToFirst()){
+            qty = c.getInt(c.getColumnIndex(ProductsEntry.COLUMN_QUANTITY));
+        }
+        else{
+            Log.e(TAG, "Could not find product in database");
+            return;
+        }
+        int newQty = qty + byVal;
+        if (newQty<0){
+            Log.e(TAG, "User tried to sell more products than available");
+            Toast.makeText(mContext, mContext.getString(R.string.qty_cannot_go_negative), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        ContentValues values = new ContentValues();
+        values.put(ProductsEntry.COLUMN_QUANTITY, newQty);
+        mContext.getContentResolver().update(updateUri, values, null, null);
+    }
 
 }

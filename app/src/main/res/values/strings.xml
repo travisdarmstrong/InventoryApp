@@ -22,6 +22,13 @@
     <string name="delete_success">Product deleted</string>
     <string name="delete_fail">Error deleting product</string>
 
+    <!-- User messages -->
+    <string name="qty_cannot_go_negative">Quantity cannot go below zero</string>
+    <string name="item_delete_success">Item deleted</string>
+    <string name="item_delete_error">Error deleting item</string>
+
+    <string name="order_email_text">I would like to place an order for the following item:</string>
+
     <!-- Dummy Data -->
     <string name="supplier1_name">Acme Corporation</string>
     <string name="supplier1_phone">(800) 555–1234</string>

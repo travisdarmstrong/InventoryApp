@@ -17,7 +17,6 @@
         android:textSize="30sp"
         tools:text="Product Name" />
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,8 +36,8 @@
                 android:id="@+id/product_description_text"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
                 android:singleLine="false"
+                android:layout_weight="1"
                 tools:text="Product description goes here.\nEven if it is very long and covers many lines, the text box should wrap the content and display it properly." />
 
             <LinearLayout
@@ -65,7 +64,6 @@
                     android:textSize="18sp"
                     tools:text="$250000.99" />
             </LinearLayout>
-
 
         </LinearLayout>
 
@@ -100,7 +98,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-
                 android:text="Sell" />
         </LinearLayout>
     </LinearLayout>
