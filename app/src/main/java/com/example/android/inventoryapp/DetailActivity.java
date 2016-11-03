@@ -50,8 +50,6 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
     private int DETAIL_LOADER = 4567;
 
-// TODO: show picture
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

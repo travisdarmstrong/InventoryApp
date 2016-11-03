@@ -176,7 +176,7 @@
         android:layout_height="wrap_content" />
     <ImageView
         android:id="@+id/editor_image"
-        android:src="@drawable/acme_anvil"
+        tools:src="@drawable/test_image"
         android:scaleType="fitCenter"
         android:layout_marginTop="16dp"
         android:layout_width="match_parent"

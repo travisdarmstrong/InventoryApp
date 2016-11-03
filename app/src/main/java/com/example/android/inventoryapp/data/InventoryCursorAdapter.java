@@ -54,13 +54,13 @@ public class InventoryCursorAdapter extends CursorAdapter {
         // get the values
         String name = cursor.getString(cursor.getColumnIndex(ProductsEntry.COLUMN_NAME));
         String description = cursor.getString(cursor.getColumnIndex(ProductsEntry.COLUMN_DESCRIPTION));
-        String price = String.valueOf(cursor.getDouble(cursor.getColumnIndex(ProductsEntry.COLUMN_PRICE)));
+        double price = cursor.getDouble(cursor.getColumnIndex(ProductsEntry.COLUMN_PRICE));
         String quantity = String.valueOf(cursor.getInt(cursor.getColumnIndex(ProductsEntry.COLUMN_QUANTITY)));
 
         // set the text
         txtName.setText(name);
         txtDescription.setText(description);
-        txtPrice.setText(price);
+        txtPrice.setText(String.format("$ %.2f", price));
         txtQuantity.setText(quantity);
 
         // get the id of the item

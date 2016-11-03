@@ -42,6 +42,9 @@
     <string name="editor_select_image">Select product image</string>
     <string name="editor_title_new">Add new product</string>
     <string name="editor_title_edit">Edit product</string>
+    <string name="editor_save_nothing">Nothing to save</string>
+    <string name="editor_save_error_productname">Product Name cannot be empty</string>
+    <string name="editor_save_error_productquantity">Product Quantity cannot be empty</string>
 
     <!-- Delete Confirmation -->
     <string name="delete_all_conf_message">Delete all products in the database?</string>

@@ -15,6 +15,7 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -74,7 +75,7 @@ public class EditProductActivity extends AppCompatActivity implements LoaderMana
             public void onClick(View v) {
                 Intent getImageIntent = new Intent(Intent.ACTION_GET_CONTENT);
                 getImageIntent.setType("image/*");
-                if (getImageIntent.resolveActivity(getPackageManager())!=null){
+                if (getImageIntent.resolveActivity(getPackageManager()) != null) {
                     startActivityForResult(getImageIntent, GET_IMAGE_ACTIVITY);
                 }
             }
@@ -107,8 +108,8 @@ public class EditProductActivity extends AppCompatActivity implements LoaderMana
             finish();
             return true;
         }
-        if (item.getItemId() == android.R.id.home){
-            if (!itemChanged){
+        if (item.getItemId() == android.R.id.home) {
+            if (!itemChanged) {
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             }
@@ -118,17 +119,17 @@ public class EditProductActivity extends AppCompatActivity implements LoaderMana
         return super.onOptionsItemSelected(item);
     }
 
-    public View.OnTouchListener onEntryTouched = new View.OnTouchListener(){
+    public View.OnTouchListener onEntryTouched = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            itemChanged=true;
+            itemChanged = true;
             return false;
         }
     };
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode==GET_IMAGE_ACTIVITY && resultCode==RESULT_OK){
+        if (requestCode == GET_IMAGE_ACTIVITY && resultCode == RESULT_OK) {
             Bitmap bmp = data.getParcelableExtra("data");
             Uri imageUri = data.getData();
             productImageView.setImageURI(imageUri);
@@ -137,17 +138,69 @@ public class EditProductActivity extends AppCompatActivity implements LoaderMana
     }
 
     private void saveProduct() {
+        // Make sure there is something to save
+        if (TextUtils.isEmpty(txtProductName.getText()) &&
+                TextUtils.isEmpty(txtProductDescription.getText()) &&
+                TextUtils.isEmpty(txtProductPrice.getText()) &&
+                TextUtils.isEmpty(txtProductQuantity.getText()) &&
+                TextUtils.isEmpty(txtSupplierName.getText()) &&
+                TextUtils.isEmpty(txtSupplierEmail.getText())) {
+            Toast.makeText(this, getString(R.string.editor_save_nothing), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         String productName = txtProductName.getText().toString();
+        // product name cannot be null
+        if (productName.isEmpty()) {
+            Toast.makeText(this, getString(R.string.editor_save_error_productname), Toast.LENGTH_SHORT).show();
+            return;
+        }
         String productDescription = txtProductDescription.getText().toString();
-        String priceString = txtProductPrice.getText().toString().replace("$", "");
-        double productPrice = Double.parseDouble(priceString);
-        int productQuantity = Integer.parseInt(txtProductQuantity.getText().toString());
+        // product price must be numeric and greater than zero
+        double productPrice = -1;
+        try {
+            String priceString = txtProductPrice.getText().toString().replace("$", "");
+            productPrice = Double.parseDouble(priceString);
+            if (productPrice < 0) {
+                Toast.makeText(this, "Product Price cannot be negative", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, "Invalid Product Price", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        // product quantity must be numeric and greater than zero
+        int productQuantity;
+        try {
+            String quantityString = txtProductQuantity.getText().toString();
+            productQuantity = Integer.parseInt(quantityString);
+            if (productQuantity < 0) {
+                Toast.makeText(this, getString(R.string.editor_save_error_productquantity), Toast.LENGTH_SHORT).show();
+                return;
+            }
+        } catch (Exception e){
+            Toast.makeText(this, "Invalid Product Quantity", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         String supplierName = txtSupplierName.getText().toString();
+        // supplier name cannot be null
+        if (supplierName.isEmpty()){
+            Toast.makeText(this, "Supplier Name cannot be empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
         String supplierEmail = txtSupplierEmail.getText().toString();
+        // supplier email cannot be null
+        if (supplierEmail.isEmpty()){
+            Toast.makeText(this, "Supplier Email cannot be empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        // TODO: get the image id thing working
-
-        // TODO: validate the text entries
+        // image uri can be null
+        String imageUriString = "";
+        if (imageUri !=null){
+            imageUriString = imageUri.toString();
+        }
 
         ContentValues values = new ContentValues();
         values.put(ProductsEntry.COLUMN_NAME, productName);
@@ -156,7 +209,7 @@ public class EditProductActivity extends AppCompatActivity implements LoaderMana
         values.put(ProductsEntry.COLUMN_QUANTITY, productQuantity);
         values.put(ProductsEntry.COLUMN_SUPPLIER_NAME, supplierName);
         values.put(ProductsEntry.COLUMN_SUPPLIER_EMAIL, supplierEmail);
-        values.put(ProductsEntry.COLUMN_IMAGE_URI, imageUri.toString());
+        values.put(ProductsEntry.COLUMN_IMAGE_URI, imageUriString);
 
         if (uri == null) {
             // save a new item
@@ -165,14 +218,14 @@ public class EditProductActivity extends AppCompatActivity implements LoaderMana
                 Toast.makeText(this, getString(R.string.save_update_fail), Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, getString(R.string.save_new_success), Toast.LENGTH_SHORT).show();
-                itemChanged=false;
+                itemChanged = false;
             }
         } else {
             // update an existing one
             int numEntriesUpdated = getContentResolver().update(uri, values, null, null);
             if (numEntriesUpdated >= 1) {
                 Toast.makeText(this, getString(R.string.save_update_success), Toast.LENGTH_SHORT).show();
-                itemChanged=false;
+                itemChanged = false;
             } else {
                 Toast.makeText(this, getString(R.string.save_update_fail), Toast.LENGTH_SHORT).show();
             }
@@ -189,7 +242,7 @@ public class EditProductActivity extends AppCompatActivity implements LoaderMana
         exitConfirmation();
     }
 
-    private void exitConfirmation(){
+    private void exitConfirmation() {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
         alertBuilder.setMessage(getString(R.string.exit_confirmation_message));
         alertBuilder.setPositiveButton(getString(R.string.exit_confirmation_positive), new DialogInterface.OnClickListener() {
@@ -241,7 +294,7 @@ public class EditProductActivity extends AppCompatActivity implements LoaderMana
 
             txtProductName.setText(name);
             txtProductDescription.setText(description);
-            txtProductPrice.setText("$" + String.valueOf(price));
+            txtProductPrice.setText(String.format("$ %.2f", price));
             txtProductQuantity.setText(String.valueOf(quantity));
             txtSupplierName.setText(supplierName);
             txtSupplierEmail.setText(supplierEmail);
