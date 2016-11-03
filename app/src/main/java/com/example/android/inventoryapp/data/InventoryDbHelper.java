@@ -18,7 +18,7 @@ public class InventoryDbHelper extends SQLiteOpenHelper {
     /**
      * Inventory Database version
      */
-    private static final int DB_VERSION = 2;
+    private static final int DB_VERSION = 3;
     /**
      * SQL code to create products table
      */
@@ -28,7 +28,7 @@ public class InventoryDbHelper extends SQLiteOpenHelper {
             ProductsEntry.COLUMN_NAME + " TEXT NOT NULL, " +
             ProductsEntry.COLUMN_PRICE + " REAL NOT NULL, " +
             ProductsEntry.COLUMN_DESCRIPTION + " TEXT, " +
-            ProductsEntry.COLUMN_IMAGE_ID + " INTEGER, " +
+            ProductsEntry.COLUMN_IMAGE_URI + " TEXT, " +
             ProductsEntry.COLUMN_QUANTITY + " INTEGER NOT NULL, " +
             ProductsEntry.COLUMN_SUPPLIER_NAME + " TEXT NOT NULL," +
             ProductsEntry.COLUMN_SUPPLIER_EMAIL + " TEXT NOT NULL);";

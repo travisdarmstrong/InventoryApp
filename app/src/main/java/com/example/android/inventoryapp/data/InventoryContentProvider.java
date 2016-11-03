@@ -117,12 +117,6 @@ public class InventoryContentProvider extends ContentProvider {
             throw new IllegalArgumentException("Product Price cannot be a negative value");
         }
 
-        // Product Description (can be null)
-        String description = values.getAsString(ProductsEntry.COLUMN_DESCRIPTION);
-
-        // Product Image Id (can be null)
-        int imageId = values.getAsInteger(ProductsEntry.COLUMN_IMAGE_ID);
-
         // Validate the Quantity
         Integer quantity = values.getAsInteger(ProductsEntry.COLUMN_QUANTITY);
         if (quantity==null){

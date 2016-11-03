@@ -36,7 +36,7 @@ COLUMN_ID               _id             INTEGER PRIMARY KEY AUTOINCREMENT
 COLUMN_NAME             name            TEXT NOT NULL
 COLUMN_PRICE            price           REAL NOT NULL
 COLUMN_DESCRIPTION      description     TEXT
-COLUMN_IMAGE_ID         image_id        INTEGER
+COLUMN_IMAGE_URI        image_id        TEXT
 COLUMN_QUANTITY         quantity        INTEGER NOT NULL
 COLUMN_SUPPLIER_NAME    name            TEXT NOT NULL
 COLUMN_SUPPLIER_EMAIL   email_address   TEXT
@@ -59,3 +59,16 @@ T70 - cyberdyne systems
 T-800 - cyberdyne systems
 
 
+
+Product Name
+Enter product name
+Product Description
+Enter product description
+Product Price
+Enter product price
+Product Quantity
+Enter current product quantity
+Supplier Name
+Enter supplier name
+Supplier Email Address
+Enter supplier email address

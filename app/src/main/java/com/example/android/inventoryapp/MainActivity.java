@@ -1,10 +1,13 @@
 package com.example.android.inventoryapp;
 
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -30,7 +33,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Cursor c;
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.btn_main_new_product);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newProductIntent = new Intent(getApplicationContext(), EditProductActivity.class);
+                startActivity(newProductIntent);
+            }
+        });
         adapter = new InventoryCursorAdapter(this, null, 0);
         ListView productListView = (ListView) findViewById(R.id.list);
         View emptyView = findViewById(R.id.empty_view);
@@ -58,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     /**
      * Confirm the user wants to delete all products in the database
@@ -105,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         values.put(ProductsEntry.COLUMN_NAME, getString(R.string.portal_name));
         values.put(ProductsEntry.COLUMN_PRICE, 2499.99);
         values.put(ProductsEntry.COLUMN_DESCRIPTION, getString(R.string.portal_desc));
-        values.put(ProductsEntry.COLUMN_IMAGE_ID, 0);
+        values.put(ProductsEntry.COLUMN_IMAGE_URI, getDrawableResourceUri(R.drawable.aperture_science_handheld_portal_device).toString());
         values.put(ProductsEntry.COLUMN_QUANTITY, 1);
         values.put(ProductsEntry.COLUMN_SUPPLIER_NAME, getString(R.string.supplier2_name));
         values.put(ProductsEntry.COLUMN_SUPPLIER_EMAIL, getString(R.string.supplier2_email));
@@ -114,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         values.put(ProductsEntry.COLUMN_NAME, getString(R.string.scube_name));
         values.put(ProductsEntry.COLUMN_PRICE, 115);
         values.put(ProductsEntry.COLUMN_DESCRIPTION, getString(R.string.scube_desc));
-        values.put(ProductsEntry.COLUMN_IMAGE_ID, 0);
+        values.put(ProductsEntry.COLUMN_IMAGE_URI, getDrawableResourceUri(R.drawable.aperture_science_weighted_storage_cube).toString());
         values.put(ProductsEntry.COLUMN_QUANTITY, 80);
         values.put(ProductsEntry.COLUMN_SUPPLIER_NAME, getString(R.string.supplier2_name));
         values.put(ProductsEntry.COLUMN_SUPPLIER_EMAIL, getString(R.string.supplier2_email));
@@ -123,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         values.put(ProductsEntry.COLUMN_NAME, getString(R.string.ccube_name));
         values.put(ProductsEntry.COLUMN_PRICE, 116);
         values.put(ProductsEntry.COLUMN_DESCRIPTION, getString(R.string.ccube_desc));
-        values.put(ProductsEntry.COLUMN_IMAGE_ID, 0);
+        values.put(ProductsEntry.COLUMN_IMAGE_URI, getDrawableResourceUri(R.drawable.aperture_science_weighted_companion_cube).toString());
         values.put(ProductsEntry.COLUMN_QUANTITY, 1);
         values.put(ProductsEntry.COLUMN_SUPPLIER_NAME, getString(R.string.supplier2_name));
         values.put(ProductsEntry.COLUMN_SUPPLIER_EMAIL, getString(R.string.supplier2_email));
@@ -132,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         values.put(ProductsEntry.COLUMN_NAME, getString(R.string.turret_name));
         values.put(ProductsEntry.COLUMN_PRICE, 11999.99);
         values.put(ProductsEntry.COLUMN_DESCRIPTION, getString(R.string.turret_desc));
-        values.put(ProductsEntry.COLUMN_IMAGE_ID, 0);
+        values.put(ProductsEntry.COLUMN_IMAGE_URI, getDrawableResourceUri(R.drawable.aperture_science_sentry_turret).toString());
         values.put(ProductsEntry.COLUMN_QUANTITY, 12);
         values.put(ProductsEntry.COLUMN_SUPPLIER_NAME, getString(R.string.supplier2_name));
         values.put(ProductsEntry.COLUMN_SUPPLIER_EMAIL, getString(R.string.supplier2_email));
@@ -142,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         values.put(ProductsEntry.COLUMN_NAME, getString(R.string.t70_name));
         values.put(ProductsEntry.COLUMN_PRICE, 60500);
         values.put(ProductsEntry.COLUMN_DESCRIPTION, getString(R.string.t70_desc));
-        values.put(ProductsEntry.COLUMN_IMAGE_ID, 0);
+        values.put(ProductsEntry.COLUMN_IMAGE_URI, getDrawableResourceUri(R.drawable.cyberdyne_systems_t70).toString());
         values.put(ProductsEntry.COLUMN_QUANTITY, 4);
         values.put(ProductsEntry.COLUMN_SUPPLIER_NAME, getString(R.string.supplier3_name));
         values.put(ProductsEntry.COLUMN_SUPPLIER_EMAIL, getString(R.string.supplier3_email));
@@ -151,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         values.put(ProductsEntry.COLUMN_NAME, getString(R.string.t800_name));
         values.put(ProductsEntry.COLUMN_PRICE, 450000);
         values.put(ProductsEntry.COLUMN_DESCRIPTION, getString(R.string.t800_desc));
-        values.put(ProductsEntry.COLUMN_IMAGE_ID, 0);
+        values.put(ProductsEntry.COLUMN_IMAGE_URI, getDrawableResourceUri(R.drawable.cyberdyne_systems_t800).toString());
         values.put(ProductsEntry.COLUMN_QUANTITY, 1);
         values.put(ProductsEntry.COLUMN_SUPPLIER_NAME, getString(R.string.supplier3_name));
         values.put(ProductsEntry.COLUMN_SUPPLIER_EMAIL, getString(R.string.supplier3_email));
@@ -161,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         values.put(ProductsEntry.COLUMN_NAME, getString(R.string.anvil_name));
         values.put(ProductsEntry.COLUMN_PRICE, 17);
         values.put(ProductsEntry.COLUMN_DESCRIPTION, getString(R.string.anvil_desc));
-        values.put(ProductsEntry.COLUMN_IMAGE_ID, 0);
+        values.put(ProductsEntry.COLUMN_IMAGE_URI, getDrawableResourceUri(R.drawable.acme_anvil).toString());
         values.put(ProductsEntry.COLUMN_QUANTITY, 4);
         values.put(ProductsEntry.COLUMN_SUPPLIER_NAME, getString(R.string.supplier1_name));
         values.put(ProductsEntry.COLUMN_SUPPLIER_EMAIL, getString(R.string.supplier1_email));
@@ -170,17 +179,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         values.put(ProductsEntry.COLUMN_NAME, getString(R.string.skates_name));
         values.put(ProductsEntry.COLUMN_PRICE, 1200);
         values.put(ProductsEntry.COLUMN_DESCRIPTION, getString(R.string.skates_desc));
-        values.put(ProductsEntry.COLUMN_IMAGE_ID, 0);
+        values.put(ProductsEntry.COLUMN_IMAGE_URI, getDrawableResourceUri(R.drawable.acme_rocket_powered_roller_skates).toString());
         values.put(ProductsEntry.COLUMN_QUANTITY, 0);
         values.put(ProductsEntry.COLUMN_SUPPLIER_NAME, getString(R.string.supplier1_name));
         values.put(ProductsEntry.COLUMN_SUPPLIER_EMAIL, getString(R.string.supplier1_email));
         newProductUri = getContentResolver().insert(ProductsEntry.CONTENT_URI, values);
-
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        if (id==LOADER_REFERENCE){
+        if (id == LOADER_REFERENCE) {
 
             Uri uri = ProductsEntry.CONTENT_URI;
             String[] columns = new String[]{
@@ -188,8 +196,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     ProductsEntry.COLUMN_NAME,
                     ProductsEntry.COLUMN_PRICE,
                     ProductsEntry.COLUMN_DESCRIPTION,
-                    ProductsEntry.COLUMN_IMAGE_ID,
-                    ProductsEntry.COLUMN_QUANTITY };
+                    ProductsEntry.COLUMN_IMAGE_URI,
+                    ProductsEntry.COLUMN_QUANTITY};
             return new CursorLoader(this,
                     uri, columns,
                     null, null, null);
@@ -207,5 +215,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         if (adapter != null) {
             adapter.swapCursor(null);
         }
+    }
+
+    private Uri getDrawableResourceUri(int resource) {
+        Uri result = Uri.parse(
+                ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
+                        getResources().getResourcePackageName(resource) + "/" +
+                        getResources().getResourceTypeName(resource) + "/" +
+                        getResources().getResourceEntryName(resource));
+        return result;
     }
 }

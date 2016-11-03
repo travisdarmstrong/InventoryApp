@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">InventoryApp</string>
     <string name="delete">Delete</string>
+    <string name="Edit">Edit</string>
+    <string name="Save">Save</string>
     <string name="plusone">+1</string>
     <string name="minusone">-1</string>
     <string name="adjust_inventory">Adjust Inventory</string>
@@ -9,6 +11,37 @@
     <string name="main_menu_insert_dummy_data">Insert Dummy Data</string>
     <string name="main_menu_delete_all">Delete All Products</string>
     <string name="empty_text">No products in the database. Add some to get started</string>
+
+    <!--- Detail Activity display -->
+    <string name="detail_text_supplier">Supplier:</string>
+    <string name="detail_text_place_order">Place\nOrder</string>
+    <string name="detail_text_quantity">Quantity:</string>
+    <string name="detail_add_custom_amount">Add\nCustom Amount</string>
+    <string name="detail_sub_custom_amount">Remove\nCustom Amount</string>
+    <string name="detail_picker_instructions_placeholder">Enter the quantity of products to %1$s</string>
+    <string name="detail_picker_add">add</string>
+    <string name="detail_picker_remove">remove</string>
+    <string name="detail_picker_negative_error">Value cannot be negative</string>
+    <string name="detail_picker_value">Value</string>
+    <string name="detail_picker_text_cancel">Cancel</string>
+    <string name="detail_picker_text_ok">OK</string>
+
+    <!-- Editor activity display -->
+    <string name="editor_product_name_label">Product Name</string>
+    <string name="editor_product_name_hint">Enter product name</string>
+    <string name="editor_product_description_label">Product Description</string>
+    <string name="editor_product_description_hint">Enter product description</string>
+    <string name="editor_product_price_label">Product Price</string>
+    <string name="editor_product_price_hint">Enter product price</string>
+    <string name="editor_product_quantity_label">Product Quantity</string>
+    <string name="editor_product_quantity_hint">Enter current product quantity</string>
+    <string name="editor_supplier_name_label">Supplier Name</string>
+    <string name="editor_supplier_name_hint">Enter supplier name</string>
+    <string name="editor_supplier_email_label">Supplier Email Address</string>
+    <string name="editor_supplier_email_hint">Enter supplier email address</string>
+    <string name="editor_select_image">Select product image</string>
+    <string name="editor_title_new">Add new product</string>
+    <string name="editor_title_edit">Edit product</string>
 
     <!-- Delete Confirmation -->
     <string name="delete_all_conf_message">Delete all products in the database?</string>
@@ -22,11 +55,18 @@
     <string name="delete_success">Product deleted</string>
     <string name="delete_fail">Error deleting product</string>
 
+    <!-- Exit confirmation -->
+    <string name="exit_confirmation_message">Discard changes and quit editing?</string>
+    <string name="exit_confirmation_positive">Discard</string>
+    <string name="exit_confirmation_negative">Keep editing</string>
+    <string name="save_new_success">New product saved</string>
+    <string name="save_update_success">Product updated</string>
+    <string name="save_update_fail">Error saving product</string>
+
     <!-- User messages -->
     <string name="qty_cannot_go_negative">Quantity cannot go below zero</string>
     <string name="item_delete_success">Item deleted</string>
     <string name="item_delete_error">Error deleting item</string>
-
     <string name="order_email_text">I would like to place an order for the following item:</string>
 
     <!-- Dummy Data -->
@@ -43,7 +83,7 @@
     <string name="supplier3_email">sales@cyberdynesystems.com</string>
     <string name="supplier3_address">(address classified)</string>
     <string name="anvil_name">Anvil</string>
-    <string name="anvil_desc">156 lbs</string>
+    <string name="anvil_desc">156 lbs, steel, black</string>
     <string name="birdseed_name">Birdseed</string>
     <string name="birdseed_desc">Especially good at attracting roadrunners.</string>
     <string name="skates_name">Rocket Powered Roller Skates</string>
@@ -60,7 +100,6 @@
     <string name="t70_desc">The Cyberdyne Series 70 Automated Fighting Infantry Unit, was the first with a humanoid form. It is a tall and basic model designed as a foot soldier.</string>
     <string name="t800_name">Series 800 Terminator</string>
     <string name="t800_desc">The T-800 Terminator is Skynet\'s first cybernetic organism, with living tissue over a hyperalloy endoskeleton.</string>
-
 
 
 </resources>

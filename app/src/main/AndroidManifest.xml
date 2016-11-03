@@ -16,13 +16,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DetailActivity" android:parentActivityName=".MainActivity" android:label="Product Detail">
+        <activity
+            android:name=".DetailActivity"
+            android:label="Product Detail"
+            android:parentActivityName=".MainActivity"></activity>
+        <activity
+            android:name=".EditProductActivity"
+            android:label="Editor"
+            android:parentActivityName=".MainActivity">
+
         </activity>
+
         <provider
-            android:authorities="com.example.android.inventoryapp"
             android:name=".data.InventoryContentProvider"
-            android:exported="false"
-            />
+            android:authorities="com.example.android.inventoryapp"
+            android:exported="false" />
     </application>
 
 </manifest>

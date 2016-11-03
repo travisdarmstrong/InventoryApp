@@ -6,7 +6,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <ImageView
@@ -61,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:fontFamily="sans-serif-light"
-                    android:text="Supplier:"
+                    android:text="@string/detail_text_supplier"
                     android:textSize="14sp" />
 
                 <TextView
@@ -81,7 +81,7 @@
                 android:layout_gravity="center_vertical"
                 android:fontFamily="sans-serif"
                 android:gravity="center"
-                android:text="Place\nOrder"
+                android:text="@string/detail_text_place_order"
                 android:textSize="12sp" />
 
             <LinearLayout
@@ -97,7 +97,7 @@
                     android:layout_gravity="right"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
-                    android:text="Quantity:"
+                    android:text="@string/detail_text_quantity"
                     android:textSize="12sp" />
 
                 <TextView
@@ -144,14 +144,36 @@
                 android:textSize="18sp" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_detail_cutom_add"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:fontFamily="sans-serif-light"
-            android:text="Add Custom Amount"
-            android:textSize="12sp" />
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_detail_custom_sub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/detail_sub_custom_amount"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btn_detail_custom_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/detail_add_custom_amount"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+
     </LinearLayout>
 
 </ScrollView>
