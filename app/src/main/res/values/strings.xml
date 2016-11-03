@@ -43,8 +43,13 @@
     <string name="editor_title_new">Add new product</string>
     <string name="editor_title_edit">Edit product</string>
     <string name="editor_save_nothing">Nothing to save</string>
-    <string name="editor_save_error_productname">Product Name cannot be empty</string>
-    <string name="editor_save_error_productquantity">Product Quantity cannot be empty</string>
+    <string name="editor_save_error_name">Product Name cannot be empty</string>
+    <string name="editor_save_error_quantity">Product Quantity cannot be empty</string>
+    <string name="editor_save_error_price">Product Price cannot be negative</string>
+    <string name="editor_save_error_priceinvalid">Invalid Product Price</string>
+    <string name="editor_save_error_quantityinvalid">Invalid Product Quantity</string>
+    <string name="editor_save_error_supplier">Supplier Name cannot be empty</string>
+    <string name="editor_save_error_supplieremail">Supplier Email cannot be empty</string>
 
     <!-- Delete Confirmation -->
     <string name="delete_all_conf_message">Delete all products in the database?</string>
@@ -103,6 +108,7 @@
     <string name="t70_desc">The Cyberdyne Series 70 Automated Fighting Infantry Unit, was the first with a humanoid form. It is a tall and basic model designed as a foot soldier.</string>
     <string name="t800_name">Series 800 Terminator</string>
     <string name="t800_desc">The T-800 Terminator is Skynet\'s first cybernetic organism, with living tissue over a hyperalloy endoskeleton.</string>
+
 
 
 </resources>

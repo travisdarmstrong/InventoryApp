@@ -162,11 +162,11 @@ public class EditProductActivity extends AppCompatActivity implements LoaderMana
             String priceString = txtProductPrice.getText().toString().replace("$", "");
             productPrice = Double.parseDouble(priceString);
             if (productPrice < 0) {
-                Toast.makeText(this, "Product Price cannot be negative", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.editor_save_error_price, Toast.LENGTH_SHORT).show();
                 return;
             }
         } catch (Exception e) {
-            Toast.makeText(this, "Invalid Product Price", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.editor_save_error_priceinvalid, Toast.LENGTH_SHORT).show();
             return;
         }
         // product quantity must be numeric and greater than zero
@@ -179,20 +179,20 @@ public class EditProductActivity extends AppCompatActivity implements LoaderMana
                 return;
             }
         } catch (Exception e){
-            Toast.makeText(this, "Invalid Product Quantity", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.editor_save_error_quantityinvalid, Toast.LENGTH_SHORT).show();
             return;
         }
 
         String supplierName = txtSupplierName.getText().toString();
         // supplier name cannot be null
         if (supplierName.isEmpty()){
-            Toast.makeText(this, "Supplier Name cannot be empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.editor_save_error_supplier, Toast.LENGTH_SHORT).show();
             return;
         }
         String supplierEmail = txtSupplierEmail.getText().toString();
         // supplier email cannot be null
         if (supplierEmail.isEmpty()){
-            Toast.makeText(this, "Supplier Email cannot be empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.editor_save_error_supplieremail, Toast.LENGTH_SHORT).show();
             return;
         }
 
